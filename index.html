@@ -59,9 +59,19 @@
   /* ---------- HERO ---------- */
   header{
     min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
-    text-align:center;padding:120px 6vw 60px;position:relative;
-    background:radial-gradient(circle at 50% 30%, #fff8ee 0%, var(--cream) 60%);
+    text-align:center;padding:120px 6vw 60px;position:relative;overflow:hidden;
   }
+  header:before{
+    content:"";position:absolute;inset:0;z-index:0;
+    background:url("img/interior-1.jpg") center/cover no-repeat;
+    transform:scale(1.05);animation:slowzoom 18s ease-in-out infinite alternate;
+  }
+  header:after{
+    content:"";position:absolute;inset:0;z-index:1;
+    background:radial-gradient(circle at 50% 38%, rgba(251,246,238,.78) 0%, rgba(244,236,224,.9) 55%, rgba(244,236,224,.97) 100%);
+  }
+  header>*{position:relative;z-index:2}
+  @keyframes slowzoom{from{transform:scale(1.05)}to{transform:scale(1.16)}}
   .cup-wrap{position:relative;margin-bottom:10px}
   .cup{font-size:clamp(80px,18vw,160px);line-height:1;filter:drop-shadow(0 12px 20px var(--shadow));animation:bob 4s ease-in-out infinite}
   .cup img{height:clamp(120px,24vw,210px);width:auto;display:block}
@@ -94,7 +104,14 @@
 
   /* about */
   .about{background:var(--paper);border-radius:40px;margin:0 4vw;padding:70px 7vw;box-shadow:0 20px 50px rgba(74,47,28,.06)}
+  .about-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:center}
+  @media(max-width:820px){.about-grid{grid-template-columns:1fr;gap:32px}}
   .about p{font-size:clamp(17px,2.2vw,21px);max-width:620px;color:#4a3a2c;line-height:1.6}
+  .about-photo{position:relative;border-radius:28px;overflow:hidden;box-shadow:0 18px 40px rgba(74,47,28,.16);aspect-ratio:4/5}
+  .about-photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s}
+  .about-photo:hover img{transform:scale(1.06)}
+  .about-photo figcaption{position:absolute;left:18px;bottom:16px;color:#fff;font-family:'Caveat';font-size:24px;text-shadow:0 2px 10px rgba(0,0,0,.5);z-index:2}
+  .about-photo:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(20,33,28,.6));z-index:1}
   .perks{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
   .perk{background:var(--milk);padding:12px 20px;border-radius:30px;font-weight:600;font-size:15px;display:flex;align-items:center;gap:8px;transition:transform .2s,background .2s}
   .perk:hover{transform:translateY(-4px) rotate(-2deg);background:var(--crema);color:#fff}
@@ -224,16 +241,24 @@
 
 <section id="about">
   <div class="about reveal">
-    <span class="eyebrow">про нас по-честному</span>
-    <h2>Место, где тебя помнят по имени</h2>
-    <p>Без пафоса и сетевого конвейера. Здесь варят американо, от которого просыпаешься по-настоящему, пекут десерты с утра и не торопят, если ты завис с ноутом на пару часов. Уютно, как у друга на кухне — только кофе вкуснее.</p>
-    <div class="perks">
-      <div class="perk">📶 Стабильный WiFi</div>
-      <div class="perk">💻 Можно работать</div>
-      <div class="perk">🥐 Свежая выпечка</div>
-      <div class="perk">🫶 Дружелюбный персонал</div>
-      <div class="perk">⭐ 4.4 на Яндексе</div>
-      <div class="perk">🥤 Кофе с собой</div>
+    <div class="about-grid">
+      <div>
+        <span class="eyebrow">про нас по-честному</span>
+        <h2>Место, где тебя помнят по имени</h2>
+        <p>Без пафоса и сетевого конвейера. Здесь варят американо, от которого просыпаешься по-настоящему, пекут десерты с утра и не торопят, если ты завис с ноутом на пару часов. А фирменные сиропы <b>Herbarista</b> превращают обычный латте в авторский. Уютно, как у друга на кухне — только кофе вкуснее.</p>
+        <div class="perks">
+          <div class="perk">📶 Стабильный WiFi</div>
+          <div class="perk">💻 Можно работать</div>
+          <div class="perk">🥐 Свежая выпечка</div>
+          <div class="perk">🫶 Дружелюбный персонал</div>
+          <div class="perk">⭐ 4.4 на Яндексе</div>
+          <div class="perk">🥤 Кофе с собой</div>
+        </div>
+      </div>
+      <figure class="about-photo">
+        <img src="img/detail-syrups.jpg" alt="Фирменные сиропы Herbarista">
+        <figcaption>фирменные сиропы Herbarista 🌿</figcaption>
+      </figure>
     </div>
   </div>
 </section>
