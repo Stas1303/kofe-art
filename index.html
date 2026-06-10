@@ -51,10 +51,16 @@
   .logo img{height:38px;width:auto;transition:transform .5s}
   .logo:hover img{transform:rotate(-8deg) scale(1.05)}
   .navlinks{display:flex;gap:28px;font-weight:600;font-size:15px}
-  .navlinks a{color:var(--coffee-dark);text-decoration:none;position:relative}
+  .navlinks a{color:var(--coffee-dark);text-decoration:none;position:relative;white-space:nowrap;transition:color .3s}
   .navlinks a:after{content:"";position:absolute;left:0;bottom:-4px;width:0;height:2px;background:var(--accent);transition:width .3s}
-  .navlinks a:hover:after{width:100%}
-  @media(max-width:680px){.navlinks{display:none}}
+  .navlinks a:hover:after,.navlinks a.active:after{width:100%}
+  .navlinks a.active{color:var(--accent)}
+  @media(max-width:680px){
+    nav{flex-direction:column;gap:8px;padding:12px 5vw}
+    nav.shrink{padding:8px 5vw}
+    .navlinks{gap:18px;font-size:14px;width:100%;overflow-x:auto;justify-content:flex-start;-ms-overflow-style:none;scrollbar-width:none;padding-bottom:2px}
+    .navlinks::-webkit-scrollbar{display:none}
+  }
 
   /* ---------- HERO ---------- */
   header{
@@ -217,6 +223,7 @@
   <div class="logo"><img src="img/logo.png" alt="Кофе Арт"> Кофе&nbsp;Арт</div>
   <div class="navlinks">
     <a href="#about">Атмосфера</a>
+    <a href="#gallery-sec">Галерея</a>
     <a href="#menu">Меню</a>
     <a href="#vibe">Вайб</a>
     <a href="#visit">Как найти</a>
@@ -425,6 +432,21 @@
   // nav shrink
   const nav=document.getElementById('nav');
   addEventListener('scroll',()=>nav.classList.toggle('shrink',scrollY>40));
+
+  // smooth scroll + active section highlight (scroll-spy)
+  const navLinks=[...document.querySelectorAll('.navlinks a')];
+  navLinks.forEach(a=>a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  }));
+  const secById={};navLinks.forEach(a=>{const s=document.querySelector(a.getAttribute('href'));if(s)secById[s.id]=a;});
+  const spy=new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting){
+      navLinks.forEach(l=>l.classList.remove('active'));
+      secById[e.target.id]?.classList.add('active');
+    }
+  }),{rootMargin:'-45% 0px -50% 0px'});
+  Object.keys(secById).forEach(id=>spy.observe(document.getElementById(id)));
 
   // reveal on scroll
   const io=new IntersectionObserver(es=>es.forEach(e=>{
