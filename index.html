@@ -48,8 +48,8 @@
   }
   nav.shrink{padding:10px 6vw}
   .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;letter-spacing:-.5px}
-  .logo .bean{font-size:26px;transition:transform .5s}
-  .logo:hover .bean{transform:rotate(360deg)}
+  .logo img{height:38px;width:auto;transition:transform .5s}
+  .logo:hover img{transform:rotate(-8deg) scale(1.05)}
   .navlinks{display:flex;gap:28px;font-weight:600;font-size:15px}
   .navlinks a{color:var(--coffee-dark);text-decoration:none;position:relative}
   .navlinks a:after{content:"";position:absolute;left:0;bottom:-4px;width:0;height:2px;background:var(--accent);transition:width .3s}
@@ -64,6 +64,7 @@
   }
   .cup-wrap{position:relative;margin-bottom:10px}
   .cup{font-size:clamp(80px,18vw,160px);line-height:1;filter:drop-shadow(0 12px 20px var(--shadow));animation:bob 4s ease-in-out infinite}
+  .cup img{height:clamp(120px,24vw,210px);width:auto;display:block}
   @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
   .puff{position:absolute;top:-18px;left:50%;transform:translateX(-50%);display:flex;gap:6px}
   .puff span{width:8px;height:8px;border-radius:50%;background:rgba(111,74,47,.25);animation:rise 3s infinite}
@@ -131,6 +132,19 @@
   .card .stamp{position:absolute;top:18px;right:18px;font-family:'Caveat';font-size:22px;color:var(--accent);transform:rotate(8deg)}
   .card.fav:after{content:"♥ хит";position:absolute;bottom:-30px;right:-30px;background:var(--accent);color:#fff;font-size:13px;font-weight:700;padding:40px 30px 12px;border-radius:50%;}
 
+  /* featured hits with photo */
+  .hits{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin:8px 0 36px}
+  @media(max-width:760px){.hits{grid-template-columns:repeat(2,1fr)}}
+  .hit-card{background:var(--paper);border-radius:22px;overflow:hidden;box-shadow:0 14px 30px rgba(74,47,28,.1);border:1px solid rgba(111,74,47,.08);transition:transform .3s}
+  .hit-card:hover{transform:translateY(-6px)}
+  .hit-card .ph{height:180px;overflow:hidden;position:relative}
+  .hit-card .ph img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+  .hit-card:hover .ph img{transform:scale(1.08)}
+  .hit-card .ph span{position:absolute;top:12px;left:12px;background:var(--accent);color:#fff;font-size:11px;font-weight:800;padding:4px 10px;border-radius:20px;letter-spacing:.5px;z-index:2}
+  .hit-card .bd{padding:16px 18px}
+  .hit-card .bd h3{font-size:17px;font-weight:800;margin-bottom:4px;line-height:1.2}
+  .hit-card .bd .pc{color:var(--coffee-dark);font-weight:800;font-size:16px}
+
   /* menu tabs + price list */
   .tabs{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 30px}
   .tab{
@@ -186,7 +200,7 @@
 <body class="grain">
 
 <nav id="nav">
-  <div class="logo"><span class="bean">☕</span> Кофе&nbsp;Арт</div>
+  <div class="logo"><img src="img/logo.png" alt="Кофе Арт"> Кофе&nbsp;Арт</div>
   <div class="navlinks">
     <a href="#about">Атмосфера</a>
     <a href="#menu">Меню</a>
@@ -198,7 +212,7 @@
 <header>
   <div class="cup-wrap">
     <div class="puff"><span></span><span></span><span></span></div>
-    <div class="cup">☕</div>
+    <div class="cup"><img src="img/logo.png" alt="Кофе Арт"></div>
   </div>
   <span class="eyebrow">маленькая кофейня с большой душой</span>
   <h1>Кофе <span class="art">Арт</span></h1>
@@ -241,6 +255,13 @@
   <div class="reveal">
     <span class="eyebrow">всё свежее, как надо</span>
     <h2>Меню</h2>
+  </div>
+
+  <div class="hits reveal">
+    <div class="hit-card"><div class="ph"><span>авторский</span><img src="img/hit-funduk.jpg" alt="Капучино Фундук — Белый шоколад"></div><div class="bd"><h3>Капучино Фундук — Белый шоколад</h3><span class="pc">450 ₽</span></div></div>
+    <div class="hit-card"><div class="ph"><span>хит</span><img src="img/hit-matcha.jpg" alt="Кокосовая Матча Латте"></div><div class="bd"><h3>Кокосовая Матча Латте</h3><span class="pc">350 ₽</span></div></div>
+    <div class="hit-card"><div class="ph"><span>свежее</span><img src="img/hit-croissant.jpg" alt="Круассан миндальный"></div><div class="bd"><h3>Круассан миндальный</h3><span class="pc">305 ₽</span></div></div>
+    <div class="hit-card"><div class="ph"><span>десерт</span><img src="img/hit-cake.jpg" alt="Медовик"></div><div class="bd"><h3>Домашние торты</h3><span class="pc">по витрине</span></div></div>
   </div>
 
   <div class="tabs reveal" id="tabs">
