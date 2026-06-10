@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Кофе Арт · Красногорский бульвар 36</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#f4ece0;
+    --paper:#fbf6ee;
+    --ink:#2a211a;
+    --coffee:#6f4a2f;
+    --coffee-dark:#4a2f1c;
+    --crema:#c89b6c;
+    --milk:#e9d9c3;
+    --accent:#d97a3c;
+    --green:#1f4a3d;
+    --gold:#c4a04e;
+    --shadow:rgba(74,47,28,.18);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Manrope',sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    overflow-x:hidden;
+    cursor:default;
+  }
+  .grain:before{
+    content:"";position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.04;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .hand{font-family:'Caveat',cursive}
+
+  /* ---------- Steam cursor trail ---------- */
+  .steam{position:fixed;pointer-events:none;z-index:9998;font-size:20px;opacity:0;transition:opacity .4s;user-select:none}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 6vw;backdrop-filter:blur(8px);
+    background:rgba(244,236,224,.7);border-bottom:1px solid rgba(111,74,47,.12);
+    transition:padding .3s;
+  }
+  nav.shrink{padding:10px 6vw}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;letter-spacing:-.5px}
+  .logo .bean{font-size:26px;transition:transform .5s}
+  .logo:hover .bean{transform:rotate(360deg)}
+  .navlinks{display:flex;gap:28px;font-weight:600;font-size:15px}
+  .navlinks a{color:var(--coffee-dark);text-decoration:none;position:relative}
+  .navlinks a:after{content:"";position:absolute;left:0;bottom:-4px;width:0;height:2px;background:var(--accent);transition:width .3s}
+  .navlinks a:hover:after{width:100%}
+  @media(max-width:680px){.navlinks{display:none}}
+
+  /* ---------- HERO ---------- */
+  header{
+    min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;padding:120px 6vw 60px;position:relative;
+    background:radial-gradient(circle at 50% 30%, #fff8ee 0%, var(--cream) 60%);
+  }
+  .cup-wrap{position:relative;margin-bottom:10px}
+  .cup{font-size:clamp(80px,18vw,160px);line-height:1;filter:drop-shadow(0 12px 20px var(--shadow));animation:bob 4s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+  .puff{position:absolute;top:-18px;left:50%;transform:translateX(-50%);display:flex;gap:6px}
+  .puff span{width:8px;height:8px;border-radius:50%;background:rgba(111,74,47,.25);animation:rise 3s infinite}
+  .puff span:nth-child(2){animation-delay:.6s}
+  .puff span:nth-child(3){animation-delay:1.2s}
+  @keyframes rise{0%{transform:translateY(0) scale(.6);opacity:0}30%{opacity:.7}100%{transform:translateY(-40px) scale(1.4);opacity:0}}
+  h1{font-size:clamp(44px,9vw,96px);font-weight:800;letter-spacing:-2px;line-height:.95;margin:6px 0}
+  h1 .art{color:var(--accent);font-family:'Caveat',cursive;font-weight:700;font-size:1.15em}
+  .tag{font-size:clamp(17px,2.4vw,22px);color:var(--coffee);max-width:560px;margin:18px auto 6px;font-weight:500}
+  .where{font-family:'Caveat';font-size:26px;color:var(--coffee-dark);margin-top:4px}
+  .cta{
+    margin-top:34px;display:inline-flex;align-items:center;gap:10px;
+    background:var(--coffee-dark);color:var(--paper);border:none;
+    padding:16px 30px;border-radius:40px;font-size:17px;font-weight:700;font-family:inherit;
+    cursor:pointer;box-shadow:0 10px 24px var(--shadow);transition:transform .25s, box-shadow .25s;text-decoration:none;
+  }
+  .cta:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 16px 30px var(--shadow)}
+  .cta:active{transform:scale(.97)}
+  .scroll-hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);font-size:13px;color:var(--coffee);letter-spacing:2px;text-transform:uppercase;animation:bob 2.5s infinite}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:90px 6vw;position:relative}
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s, transform .8s}
+  .reveal.in{opacity:1;transform:none}
+  .eyebrow{font-family:'Caveat';font-size:30px;color:var(--accent);transform:rotate(-3deg);display:inline-block}
+  h2{font-size:clamp(30px,5vw,52px);font-weight:800;letter-spacing:-1px;margin:6px 0 28px;max-width:14ch}
+
+  /* about */
+  .about{background:var(--paper);border-radius:40px;margin:0 4vw;padding:70px 7vw;box-shadow:0 20px 50px rgba(74,47,28,.06)}
+  .about p{font-size:clamp(17px,2.2vw,21px);max-width:620px;color:#4a3a2c;line-height:1.6}
+  .perks{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+  .perk{background:var(--milk);padding:12px 20px;border-radius:30px;font-weight:600;font-size:15px;display:flex;align-items:center;gap:8px;transition:transform .2s,background .2s}
+  .perk:hover{transform:translateY(-4px) rotate(-2deg);background:var(--crema);color:#fff}
+
+  /* gallery */
+  .gallery{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:200px;gap:16px;margin-top:14px}
+  .gallery figure{position:relative;overflow:hidden;border-radius:24px;box-shadow:0 16px 34px rgba(74,47,28,.14);margin:0;cursor:pointer}
+  .gallery img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+  .gallery figure:hover img{transform:scale(1.08)}
+  .gallery figure:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(20,40,33,.55));opacity:0;transition:opacity .4s;z-index:1}
+  .gallery figure:hover:before{opacity:1}
+  .gallery figcaption{position:absolute;left:16px;bottom:14px;z-index:2;color:#fff;font-family:'Caveat';font-size:24px;opacity:0;transform:translateY(10px);transition:.4s}
+  .gallery figure:hover figcaption{opacity:1;transform:none}
+  .g-tall{grid-row:span 2}
+  .g-wide{grid-column:span 2}
+  @media(max-width:760px){.gallery{grid-template-columns:repeat(2,1fr);grid-auto-rows:160px}.g-wide{grid-column:span 2}}
+
+  /* lightbox */
+  .lb{position:fixed;inset:0;z-index:200;background:rgba(20,33,28,.92);display:none;align-items:center;justify-content:center;padding:5vw;backdrop-filter:blur(6px)}
+  .lb.open{display:flex}
+  .lb img{max-width:92vw;max-height:88vh;border-radius:18px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+  .lb .x{position:absolute;top:22px;right:30px;color:#fff;font-size:40px;cursor:pointer;line-height:1;font-weight:300}
+
+  /* menu */
+  .menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin-top:10px}
+  .card{
+    background:var(--paper);border-radius:26px;padding:30px;position:relative;overflow:hidden;
+    box-shadow:0 14px 30px rgba(74,47,28,.08);transition:transform .3s;cursor:pointer;border:1px solid rgba(111,74,47,.08);
+  }
+  .card:hover{transform:translateY(-8px) rotate(-1deg)}
+  .card .emoji{font-size:46px;display:block;transition:transform .4s}
+  .card:hover .emoji{transform:scale(1.2) rotate(10deg)}
+  .card h3{font-size:23px;margin:14px 0 6px;font-weight:800}
+  .card p{color:#6a5746;font-size:15px;line-height:1.5}
+  .card .stamp{position:absolute;top:18px;right:18px;font-family:'Caveat';font-size:22px;color:var(--accent);transform:rotate(8deg)}
+  .card.fav:after{content:"♥ хит";position:absolute;bottom:-30px;right:-30px;background:var(--accent);color:#fff;font-size:13px;font-weight:700;padding:40px 30px 12px;border-radius:50%;}
+
+  /* menu tabs + price list */
+  .tabs{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 30px}
+  .tab{
+    border:1.5px solid rgba(111,74,47,.22);background:transparent;color:var(--coffee-dark);
+    padding:10px 20px;border-radius:30px;font-family:inherit;font-weight:700;font-size:15px;cursor:pointer;
+    transition:all .25s;
+  }
+  .tab:hover{background:var(--milk)}
+  .tab.active{background:var(--coffee-dark);color:var(--paper);border-color:var(--coffee-dark)}
+  .cat{margin-bottom:14px}
+  .cat.hide{display:none}
+  .cat-title{font-family:'Caveat';font-size:32px;color:var(--accent);margin:18px 0 4px;display:flex;align-items:center;gap:10px}
+  .price-list{background:var(--paper);border-radius:24px;padding:14px 28px;box-shadow:0 14px 30px rgba(74,47,28,.07);border:1px solid rgba(111,74,47,.08)}
+  .pr{display:flex;align-items:baseline;gap:12px;padding:13px 0;border-bottom:1px dashed rgba(111,74,47,.18)}
+  .pr:last-child{border-bottom:none}
+  .pr .nm{font-weight:700;font-size:16px;display:flex;align-items:center;gap:8px}
+  .pr .dots{flex:1;border-bottom:2px dotted rgba(111,74,47,.25);transform:translateY(-4px)}
+  .pr .pc{font-weight:800;font-size:16px;color:var(--coffee-dark);white-space:nowrap}
+  .pr .hit{background:var(--accent);color:#fff;font-size:11px;font-weight:800;padding:2px 9px;border-radius:20px;letter-spacing:.5px}
+  .pr:hover .nm{color:var(--accent)}
+
+  /* meter */
+  .vibe{background:linear-gradient(135deg,var(--coffee-dark),var(--coffee));color:var(--paper);border-radius:40px;margin:0 4vw;padding:70px 7vw;text-align:center}
+  .vibe h2{margin-inline:auto;color:#fff}
+  .meter{max-width:520px;margin:30px auto 0}
+  .meter-row{display:flex;align-items:center;gap:16px;margin:18px 0;font-weight:600}
+  .meter-row span{width:120px;text-align:left;font-size:15px}
+  .bar{flex:1;height:14px;background:rgba(255,255,255,.18);border-radius:10px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:var(--crema);border-radius:10px;transition:width 1.4s cubic-bezier(.2,.8,.2,1)}
+
+  /* visit / footer */
+  .visit{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+  @media(max-width:760px){.visit{grid-template-columns:1fr}}
+  .info-card{background:var(--paper);border-radius:30px;padding:40px;box-shadow:0 14px 34px rgba(74,47,28,.08)}
+  .info-card .row{display:flex;gap:14px;align-items:flex-start;margin:18px 0;font-size:16px}
+  .info-card .row b{display:block;font-size:14px;color:var(--coffee);font-weight:700;text-transform:uppercase;letter-spacing:1px}
+  .info-card a{color:var(--coffee-dark);font-weight:700;text-decoration:none;border-bottom:2px solid var(--crema)}
+  .map{border-radius:30px;overflow:hidden;min-height:320px;box-shadow:0 14px 34px rgba(74,47,28,.1);background:var(--milk)}
+  .map iframe{width:100%;height:100%;min-height:320px;border:0;display:block}
+
+  footer{text-align:center;padding:60px 6vw 40px;color:var(--coffee)}
+  footer .big{font-family:'Caveat';font-size:38px;color:var(--coffee-dark)}
+  .hearts{font-size:13px;margin-top:8px}
+
+  /* loyalty easter egg */
+  .loyalty{margin:50px auto 0;max-width:420px;background:var(--paper);border:2px dashed var(--crema);border-radius:24px;padding:26px;text-align:center}
+  .stamps{display:flex;justify-content:center;gap:12px;margin:18px 0 6px}
+  .stamps .s{width:40px;height:40px;border-radius:50%;border:2px solid var(--crema);display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;transition:transform .2s;background:#fff}
+  .stamps .s.on{background:var(--coffee-dark);border-color:var(--coffee-dark);transform:scale(1.1)}
+  .loyalty small{color:#6a5746}
+</style>
+</head>
+<body class="grain">
+
+<nav id="nav">
+  <div class="logo"><span class="bean">☕</span> Кофе&nbsp;Арт</div>
+  <div class="navlinks">
+    <a href="#about">Атмосфера</a>
+    <a href="#menu">Меню</a>
+    <a href="#vibe">Вайб</a>
+    <a href="#visit">Как найти</a>
+  </div>
+</nav>
+
+<header>
+  <div class="cup-wrap">
+    <div class="puff"><span></span><span></span><span></span></div>
+    <div class="cup">☕</div>
+  </div>
+  <span class="eyebrow">маленькая кофейня с большой душой</span>
+  <h1>Кофе <span class="art">Арт</span></h1>
+  <p class="tag">Свежая обжарка, тёплый раф с солёной карамелью и выпечка, ради которой хочется вернуться.</p>
+  <p class="where">↳ Красногорский бульвар, 36</p>
+  <a href="#menu" class="cta">Что попробовать <span>→</span></a>
+  <div class="scroll-hint">листай вниз</div>
+</header>
+
+<section id="about">
+  <div class="about reveal">
+    <span class="eyebrow">про нас по-честному</span>
+    <h2>Место, где тебя помнят по имени</h2>
+    <p>Без пафоса и сетевого конвейера. Здесь варят американо, от которого просыпаешься по-настоящему, пекут десерты с утра и не торопят, если ты завис с ноутом на пару часов. Уютно, как у друга на кухне — только кофе вкуснее.</p>
+    <div class="perks">
+      <div class="perk">📶 Стабильный WiFi</div>
+      <div class="perk">💻 Можно работать</div>
+      <div class="perk">🥐 Свежая выпечка</div>
+      <div class="perk">🫶 Дружелюбный персонал</div>
+      <div class="perk">⭐ 4.4 на Яндексе</div>
+      <div class="perk">🥤 Кофе с собой</div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery-sec">
+  <div class="reveal">
+    <span class="eyebrow">загляни внутрь</span>
+    <h2>Наш уголок уюта</h2>
+  </div>
+  <div class="gallery reveal">
+    <figure class="g-tall"><img src="img/interior-1.jpg" alt="Изумрудные кресла и геометрические полки"><figcaption>бархат и латунь ✨</figcaption></figure>
+    <figure class="g-wide"><img src="img/interior-3.jpg" alt="Витрина с выпечкой и меню"><figcaption>свежая выпечка с утра 🥐</figcaption></figure>
+    <figure><img src="img/interior-2.jpg" alt="Тёплые гирлянды в зеркале"><figcaption>тёплый свет 💡</figcaption></figure>
+    <figure><img src="img/interior-4.jpg" alt="Уютный столик у зеркала"><figcaption>твоё место у окна ☕</figcaption></figure>
+  </div>
+</section>
+
+<section id="menu">
+  <div class="reveal">
+    <span class="eyebrow">всё свежее, как надо</span>
+    <h2>Меню</h2>
+  </div>
+
+  <div class="tabs reveal" id="tabs">
+    <button class="tab active" data-cat="all">Всё</button>
+    <button class="tab" data-cat="classic">Классика ☕</button>
+    <button class="tab" data-cat="signature">Авторские ✨</button>
+    <button class="tab" data-cat="shake">Шейки и смузи 🥤</button>
+    <button class="tab" data-cat="nocoffee">Не кофе 🍵</button>
+    <button class="tab" data-cat="cold">Холодное 🧊</button>
+    <button class="tab" data-cat="bakery">Выпечка 🥐</button>
+  </div>
+
+  <div class="cat reveal" data-cat="classic">
+    <div class="cat-title">☕ Классика</div>
+    <div class="price-list">
+      <div class="pr"><span class="nm">Эспрессо</span><span class="dots"></span><span class="pc">180 ₽</span></div>
+      <div class="pr"><span class="nm">Американо <span class="hit">хит</span></span><span class="dots"></span><span class="pc">150–225 ₽</span></div>
+      <div class="pr"><span class="nm">Флэт Уайт</span><span class="dots"></span><span class="pc">230–370 ₽</span></div>
+      <div class="pr"><span class="nm">Капучино</span><span class="dots"></span><span class="pc">180–370 ₽</span></div>
+      <div class="pr"><span class="nm">Латте</span><span class="dots"></span><span class="pc">220–280 ₽</span></div>
+      <div class="pr"><span class="nm">Раф</span><span class="dots"></span><span class="pc">280–370 ₽</span></div>
+      <div class="pr"><span class="nm">Фильтр-кофе</span><span class="dots"></span><span class="pc">240 ₽</span></div>
+    </div>
+  </div>
+
+  <div class="cat reveal" data-cat="signature">
+    <div class="cat-title">✨ Авторские напитки</div>
+    <div class="price-list">
+      <div class="pr"><span class="nm">Капучино Фундук — Белый шоколад</span><span class="dots"></span><span class="pc">450 ₽</span></div>
+      <div class="pr"><span class="nm">Латте Улун — персик</span><span class="dots"></span><span class="pc">420 ₽</span></div>
+      <div class="pr"><span class="nm">Розовый Латте</span><span class="dots"></span><span class="pc">390 ₽</span></div>
+      <div class="pr"><span class="nm">Латте Мята — шоколад</span><span class="dots"></span><span class="pc">390 ₽</span></div>
+      <div class="pr"><span class="nm">Латте Фисташка — малина</span><span class="dots"></span><span class="pc">450 ₽</span></div>
+      <div class="pr"><span class="nm">Раф Малиновый Кранч</span><span class="dots"></span><span class="pc">420 ₽</span></div>
+      <div class="pr"><span class="nm">Раф Халва</span><span class="dots"></span><span class="pc">420 ₽</span></div>
+      <div class="pr"><span class="nm">Раф Баунти</span><span class="dots"></span><span class="pc">450 ₽</span></div>
+      <div class="pr"><span class="nm">Матча Латте Алоэ</span><span class="dots"></span><span class="pc">350 ₽</span></div>
+      <div class="pr"><span class="nm">Кокосовая Матча Латте</span><span class="dots"></span><span class="pc">350 ₽</span></div>
+    </div>
+  </div>
+
+  <div class="cat reveal" data-cat="shake">
+    <div class="cat-title">🥤 Милкшейки и смузи</div>
+    <div class="price-list">
+      <div class="pr"><span class="nm">Милкшейк Классика</span><span class="dots"></span><span class="pc">395 ₽</span></div>
+      <div class="pr"><span class="nm">Милкшейк Баунти</span><span class="dots"></span><span class="pc">420 ₽</span></div>
+      <div class="pr"><span class="nm">Милкшейк Сникерс</span><span class="dots"></span><span class="pc">420 ₽</span></div>
+      <div class="pr"><span class="nm">Протеиновый шейк</span><span class="dots"></span><span class="pc">450 ₽</span></div>
+      <div class="pr"><span class="nm">Зелёный смузи</span><span class="dots"></span><span class="pc">340 ₽</span></div>
+      <div class="pr"><span class="nm">Ягодный смузи</span><span class="dots"></span><span class="pc">340 ₽</span></div>
+      <div class="pr"><span class="nm">Ананас — кокос смузи</span><span class="dots"></span><span class="pc">450 ₽</span></div>
+      <div class="pr"><span class="nm">Манго — маракуйя смузи</span><span class="dots"></span><span class="pc">450 ₽</span></div>
+    </div>
+  </div>
+
+  <div class="cat reveal" data-cat="nocoffee">
+    <div class="cat-title">🍵 Не кофе</div>
+    <div class="price-list">
+      <div class="pr"><span class="nm">Матча Латте</span><span class="dots"></span><span class="pc">350 ₽</span></div>
+      <div class="pr"><span class="nm">Какао</span><span class="dots"></span><span class="pc">250–300 ₽</span></div>
+      <div class="pr"><span class="nm">Чай листовой</span><span class="dots"></span><span class="pc">180 ₽</span></div>
+      <div class="pr"><span class="nm">Нечай Манго — маракуйя</span><span class="dots"></span><span class="pc">360 ₽</span></div>
+      <div class="pr"><span class="nm">Нечай Клюква — можжевельник</span><span class="dots"></span><span class="pc">360 ₽</span></div>
+      <div class="pr"><span class="nm">Tea &amp; Cream</span><span class="dots"></span><span class="pc">450 ₽</span></div>
+      <div class="pr"><span class="nm">Бейбичино <span class="hit">для малышей</span></span><span class="dots"></span><span class="pc">120 ₽</span></div>
+    </div>
+  </div>
+
+  <div class="cat reveal" data-cat="cold">
+    <div class="cat-title">🧊 Холодные напитки</div>
+    <div class="price-list">
+      <div class="pr"><span class="nm">Айс Американо</span><span class="dots"></span><span class="pc">290 ₽</span></div>
+      <div class="pr"><span class="nm">Айс Капучино</span><span class="dots"></span><span class="pc">350 ₽</span></div>
+      <div class="pr"><span class="nm">Айс Латте</span><span class="dots"></span><span class="pc">350 ₽</span></div>
+      <div class="pr"><span class="nm">Бамбл</span><span class="dots"></span><span class="pc">350 ₽</span></div>
+      <div class="pr"><span class="nm">Лимонад</span><span class="dots"></span><span class="pc">350 ₽</span></div>
+      <div class="pr"><span class="nm">Эспрессо Тоник</span><span class="dots"></span><span class="pc">350 ₽</span></div>
+    </div>
+  </div>
+
+  <div class="cat reveal" data-cat="bakery">
+    <div class="cat-title">🥐 Выпечка</div>
+    <div class="price-list">
+      <div class="pr"><span class="nm">Круассан классический</span><span class="dots"></span><span class="pc">240 ₽</span></div>
+      <div class="pr"><span class="nm">Круассан с шоколадным кремом</span><span class="dots"></span><span class="pc">295 ₽</span></div>
+      <div class="pr"><span class="nm">Круассан со смородиной</span><span class="dots"></span><span class="pc">295 ₽</span></div>
+      <div class="pr"><span class="nm">Круассан с ванильным кремом</span><span class="dots"></span><span class="pc">295 ₽</span></div>
+      <div class="pr"><span class="nm">Круассан миндальный</span><span class="dots"></span><span class="pc">305 ₽</span></div>
+      <div class="pr"><span class="nm">Ротонда Фисташка — малина</span><span class="dots"></span><span class="pc">305 ₽</span></div>
+    </div>
+  </div>
+
+  <p class="reveal" style="text-align:center;color:var(--coffee);font-size:14px;margin-top:24px">Цены актуальны на момент публикации · уточняйте в кофейне</p>
+</section>
+
+<section id="vibe">
+  <div class="vibe reveal">
+    <span class="eyebrow" style="color:var(--crema)">атмосфера в цифрах</span>
+    <h2>Какой здесь вайб</h2>
+    <div class="meter">
+      <div class="meter-row"><span>Уют</span><div class="bar"><i data-w="96"></i></div></div>
+      <div class="meter-row"><span>Кофе</span><div class="bar"><i data-w="92"></i></div></div>
+      <div class="meter-row"><span>Тишина для работы</span><div class="bar"><i data-w="85"></i></div></div>
+      <div class="meter-row"><span>Тепло персонала</span><div class="bar"><i data-w="98"></i></div></div>
+    </div>
+
+    <div class="loyalty">
+      <strong>🎁 Собери своё утро</strong>
+      <div class="stamps" id="stamps">
+        <div class="s">☕</div><div class="s">☕</div><div class="s">☕</div>
+        <div class="s">☕</div><div class="s">☕</div><div class="s">🎁</div>
+      </div>
+      <small id="loyalty-msg">Кликай по чашкам — собери 5 и получи воображаемый бонус ✨</small>
+    </div>
+  </div>
+</section>
+
+<section id="visit">
+  <div class="reveal">
+    <span class="eyebrow">забегай в гости</span>
+    <h2>Как нас найти</h2>
+  </div>
+  <div class="visit">
+    <div class="info-card reveal">
+      <div class="row">📍<div><b>Адрес</b>Красногорск, Красногорский бульвар, 36</div></div>
+      <div class="row">📞<div><b>Телефон</b><a href="tel:+79175198265">+7 917 519-82-65</a></div></div>
+      <div class="row">✈️<div><b>Telegram</b><a href="https://t.me/coffeeart_36" target="_blank">@coffeeart_36</a></div></div>
+      <div class="row">📸<div><b>Instagram</b><a href="https://instagram.com/_coffee__art_" target="_blank">@_coffee__art_</a></div></div>
+      <div class="row">☕<div><b>Формат</b>Кофейня · Кофе с собой · Пекарня</div></div>
+      <a href="https://yandex.ru/maps/?text=Красногорский+бульвар+36+кофе+арт" target="_blank" class="cta" style="margin-top:24px">Открыть на карте 🗺️</a>
+    </div>
+    <div class="map reveal">
+      <iframe loading="lazy" src="https://yandex.ru/map-widget/v1/?text=Красногорский%20бульвар%2036%20Красногорск&z=16"></iframe>
+    </div>
+  </div>
+</section>
+
+<div class="lb" id="lb"><span class="x">&times;</span><img src="" alt=""></div>
+
+<footer>
+  <div class="big">До встречи за чашечкой ☕</div>
+  <p class="hearts">Сделано с любовью к кофе · Кофе Арт, Красногорский бульвар 36</p>
+</footer>
+
+<script>
+  // nav shrink
+  const nav=document.getElementById('nav');
+  addEventListener('scroll',()=>nav.classList.toggle('shrink',scrollY>40));
+
+  // reveal on scroll
+  const io=new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('in');
+      if(e.target.querySelector('.bar i')||e.target.classList.contains('vibe')){
+        e.target.querySelectorAll('.bar i').forEach(b=>b.style.width=b.dataset.w+'%');
+      }
+    }
+  }),{threshold:.18});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // menu category tabs
+  const tabs=document.querySelectorAll('.tab');
+  const cats=document.querySelectorAll('.cat');
+  tabs.forEach(t=>t.addEventListener('click',()=>{
+    tabs.forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    const c=t.dataset.cat;
+    cats.forEach(cat=>cat.classList.toggle('hide', c!=='all'&&cat.dataset.cat!==c));
+  }));
+
+  // lightbox
+  const lb=document.getElementById('lb'),lbImg=lb.querySelector('img');
+  document.querySelectorAll('.gallery figure img').forEach(im=>im.addEventListener('click',()=>{
+    lbImg.src=im.src;lb.classList.add('open');
+  }));
+  lb.addEventListener('click',()=>lb.classList.remove('open'));
+
+  // loyalty stamps
+  const stamps=document.querySelectorAll('#stamps .s');
+  const msg=document.getElementById('loyalty-msg');
+  let count=0;
+  stamps.forEach((s,i)=>{
+    if(i<5) s.addEventListener('click',()=>{
+      s.classList.toggle('on');
+      count=document.querySelectorAll('#stamps .s.on').length;
+      if(count>=5){msg.innerHTML='🎉 Готово! Покажи это бариста — и пусть улыбнётся. Ты заслужил(а) ✨';stamps[5].classList.add('on');}
+      else msg.textContent=`Собрано ${count} из 5 — ещё чуть-чуть!`;
+    });
+  });
+
+  // steam cursor trail
+  let last=0;
+  addEventListener('mousemove',e=>{
+    const now=Date.now();
+    if(now-last<90)return;last=now;
+    const p=document.createElement('div');
+    p.className='steam';p.textContent='˚';
+    p.style.left=e.clientX+'px';p.style.top=e.clientY+'px';
+    document.body.appendChild(p);
+    requestAnimationFrame(()=>{p.style.opacity='.5';p.style.transform='translateY(-26px)';p.style.transition='opacity 1s,transform 1s';});
+    setTimeout(()=>p.remove(),1000);
+  });
+</script>
+</body>
+</html>
