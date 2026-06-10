@@ -402,15 +402,6 @@
       <div class="meter-row"><span>Тишина для работы</span><div class="bar"><i data-w="85"></i></div></div>
       <div class="meter-row"><span>Тепло персонала</span><div class="bar"><i data-w="98"></i></div></div>
     </div>
-
-    <div class="loyalty">
-      <strong>🎁 Собери своё утро</strong>
-      <div class="stamps" id="stamps">
-        <div class="s">☕</div><div class="s">☕</div><div class="s">☕</div>
-        <div class="s">☕</div><div class="s">☕</div><div class="s">🎁</div>
-      </div>
-      <small id="loyalty-msg">Кликай по чашкам — собери 5 и получи воображаемый бонус ✨</small>
-    </div>
   </div>
 </section>
 
@@ -424,8 +415,6 @@
       <div class="row">📍<div><b>Адрес</b>Красногорск, Красногорский бульвар, 36</div></div>
       <div class="row">📞<div><b>Телефон</b><a href="tel:+79175198265">+7 917 519-82-65</a></div></div>
       <div class="row">✈️<div><b>Telegram</b><a href="https://t.me/coffeeart_36" target="_blank">@coffeeart_36</a></div></div>
-      <div class="row">📸<div><b>Instagram</b><a href="https://instagram.com/_coffee__art_" target="_blank">@_coffee__art_</a></div></div>
-      <div class="row">☕<div><b>Формат</b>Кофейня · Кофе с собой · Пекарня</div></div>
       <a href="https://yandex.ru/maps/?text=Красногорский+бульвар+36+кофе+арт" target="_blank" class="cta" style="margin-top:24px">Открыть на карте 🗺️</a>
     </div>
     <div class="map reveal">
@@ -479,19 +468,6 @@
   const gStep=()=>{const f=gal.querySelector('figure');return f?f.offsetWidth+16:320;};
   document.getElementById('gPrev').addEventListener('click',()=>gal.scrollBy({left:-gStep(),behavior:'smooth'}));
   document.getElementById('gNext').addEventListener('click',()=>gal.scrollBy({left:gStep(),behavior:'smooth'}));
-
-  // loyalty stamps
-  const stamps=document.querySelectorAll('#stamps .s');
-  const msg=document.getElementById('loyalty-msg');
-  let count=0;
-  stamps.forEach((s,i)=>{
-    if(i<5) s.addEventListener('click',()=>{
-      s.classList.toggle('on');
-      count=document.querySelectorAll('#stamps .s.on').length;
-      if(count>=5){msg.innerHTML='🎉 Готово! Покажи это бариста — и пусть улыбнётся. Ты заслужил(а) ✨';stamps[5].classList.add('on');}
-      else msg.textContent=`Собрано ${count} из 5 — ещё чуть-чуть!`;
-    });
-  });
 
   // steam cursor trail
   let last=0;
